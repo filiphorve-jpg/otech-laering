@@ -2,9 +2,9 @@
 
 Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
-## 13.07.2026 – Fase 1 (Windows) + Fase 3 (Git)
-
 ---
+
+## 13.07.2026 – Fase 1 (Windows) + Fase 3 (Git)
 
 **Gjort:**
 - Satt opp VirtualBox og Ubuntu Server (x86/AMD64) på Windows-PC
