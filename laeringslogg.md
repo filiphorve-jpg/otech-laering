@@ -4,6 +4,34 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 13.07.2026 – Fase 2: Nettverk (Packet Tracer)
+
+**Gjort:**
+- Installert Cisco Packet Tracer, opprettet NetAcad-konto
+- Bygget grunnleggende topologi: PC-er, switch, ruter med to subnett (192.168.1.0/24 og 192.168.2.0/24)
+- Konfigurerte ruterens IP-adresser via CLI (interface, ip address, no shutdown)
+- Lærte write memory / copy running-config startup-config for permanent lagring
+
+**Utfordringer:**
+- Vedvarende "no ping"-problem mellom PC og ruter til tross for korrekt konfigurasjon
+- Systematisk feilsøkt: bekreftet IP/gateway på PC, portstatus på switch, MAC-tabell, 
+  CDP-naboer, ARP-tabell - alt viste riktig konfigurasjon, men trafikk kom aldri gjennom
+- Mistanke om Packet Tracer-programfeil, mulig konflikt med VirtualBox sine nettverksadaptere
+
+**Lært:**
+- Feilsøkingsmetodikk for nettverk: sjekk lag for lag (fysisk kobling -> switch MAC-tabell 
+  -> ARP -> ruterkonfigurasjon)
+- Ciscokonfigurasjon lagres kun i RAM til man kjører "write memory" - akkurat som Git 
+  krever commit for at endringer skal bli permanente
+- show ip interface brief, show mac address-table, show cdp neighbors, arp -a som 
+  diagnostikkverktøy
+
+**Neste steg:**
+- Avinstaller/installer Packet Tracer på nytt
+- Fullføre subnetting/VLAN-øvelsen når verktøyet fungerer stabilt
+
+---
+
 ## 13.07.2026 – Fase 1 (Windows) + Fase 3 (Git)
 
 **Gjort:**
