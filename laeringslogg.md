@@ -4,6 +4,48 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 17.07.2026 – Fase 2: VLAN og Router-on-a-Stick
+
+**Mål:** Segmentere ett fysisk nettverk i flere logiske VLAN på én switch, og få en ruter til å rute trafikk mellom VLAN-ene over én enkelt kabel (router-on-a-stick).
+
+**Topologi:**
+- 1 Switch (2960) med 4 PC-er tilkoblet
+- PC0, PC1 → VLAN 10 (192.168.10.0/24)
+- PC2, PC3 → VLAN 20 (192.168.20.0/24)
+- Router (1941) koblet til switch med én kabel, trunk-port
+
+**Del 1 – VLAN-konfigurasjon på switch:**
+- Opprettet VLAN 10 (navn: nett1) og VLAN 20 (navn: nett2)
+- Satt FastEthernet0/1 og 0/2 til access-porter i VLAN 10
+- Satt FastEthernet0/3 og 0/4 til access-porter i VLAN 20
+- Verifisert med show vlan brief
+
+**Test av isolasjon (før ruter):**
+- PC0 til PC1 (samme VLAN) → OK
+- PC0 til PC2 (ulikt VLAN) → Feilet som forventet (bekrefter at VLAN-ene er isolert fra hverandre)
+
+**Del 2 – Router-on-a-stick:**
+- Satt FastEthernet0/5 på switch til trunk-modus (switchport mode trunk)
+- Opprettet subinterfaces på ruterens GigabitEthernet0/0:
+  - 0/0.10 med encapsulation dot1Q 10, IP 192.168.10.254/24
+  - 0/0.20 med encapsulation dot1Q 20, IP 192.168.20.254/24
+- Aktivert hovedinterface med no shutdown
+- Lagret konfigurasjon med write memory
+- Satt Default Gateway på alle 4 PC-er (192.168.10.254 for VLAN 10, 192.168.20.254 for VLAN 20)
+
+**Resultat:**
+- Ping fra PC0 til PC2 (på tvers av VLAN) → OK etter at ruteren var konfigurert
+- Ping fra PC0 til egen gateway → OK
+- Bekreftet full ruting mellom VLAN 10 og VLAN 20 via router-on-a-stick
+
+**Læring:**
+- VLAN isolerer trafikk på Layer 2 selv om enhetene er på samme fysiske switch
+- Trunk-porter sender tagget trafikk for flere VLAN over én kabel
+- Subinterfaces lar én fysisk ruterport fungere som flere logiske gateway-adresser
+- write memory må kjøres igjen etter ny ruterkonfigurasjon – samme lærdom som i forrige økt
+
+---
+
 ## 16.07.2026 – Fase 2: Løst ping-problem mellom nettverk (routing fungerer)
 
 **Mål:** Få inter-nettverk-ruting til å fungere mellom to nett via Cisco 1941-ruter i Packet Tracer.
