@@ -4,6 +4,29 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 17.07.2026 – Fase 2: DNS-oppsett og test på tvers av VLAN
+
+**Mål:** Sette opp en enkel DNS-tjeneste og bekrefte navneoppslag fungerer, inkludert på tvers av VLAN.
+
+**Konfigurasjon:**
+- Lagt til en Server (Server-PT) koblet til switch, port FastEthernet0/6
+- Satt Fa0/6 til access-port i VLAN 10 (switchport access vlan 10)
+- Server fikk statisk IP 192.168.10.100, gateway 192.168.10.254
+- Aktivert DNS-tjeneste på serveren, lagt til A-record: test.otech.local → 192.168.10.100
+- Lagt til dns-server 192.168.10.100 i begge DHCP-poolene (VLAN10 og VLAN20) på ruteren
+- Fornyet DHCP-lease på PC-ene for å hente ny DNS-info
+
+**Test:**
+- ping test.otech.local fra PC0 (VLAN 10) → OK, løst til riktig IP
+- ping test.otech.local fra PC2 (VLAN 20) → OK, bekrefter DNS-oppslag fungerer på tvers av VLAN
+
+**Læring:**
+- DNS-info kan distribueres automatisk til klienter via DHCP (dns-server-kommando i pool), i stedet for å settes manuelt på hver PC
+- DNS-oppslag er avhengig av at underliggende routing (inter-VLAN) fungerer, siden PC2 må nå serveren i VLAN 10 for å få svar
+- Fase 2s kjerneelementer (IPv4/subnetting, VLAN, DHCP, DNS, routing, Cisco IOS) er nå dekket praktisk gjennom disse øvelsene
+
+---
+
 ## 17.07.2026 – Fase 2: DHCP for to VLAN
 
 **Mål:** Sette opp automatisk IP-utdeling (DHCP) for begge VLAN via ruteren, i stedet for statisk IP på hver PC.
