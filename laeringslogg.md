@@ -4,6 +4,33 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 17.07.2026 – Fase 2: DHCP for to VLAN
+
+**Mål:** Sette opp automatisk IP-utdeling (DHCP) for begge VLAN via ruteren, i stedet for statisk IP på hver PC.
+
+**Konfigurasjon på ruter:**
+- Ekskluderte gateway-adressene fra utdeling (ip dhcp excluded-address 192.168.10.254 og 192.168.20.254)
+- Opprettet DHCP pool VLAN10: network 192.168.10.0/24, default-router 192.168.10.254
+- Opprettet DHCP pool VLAN20: network 192.168.20.0/24, default-router 192.168.20.254
+- Lagret konfigurasjon med write memory
+
+**Feil underveis:**
+- Skrev ved en feil 192.169.10.0 i stedet for 192.168.10.0 i network-kommandoen for VLAN10-poolen
+- Rettet opp ved å kjøre network-kommandoen på nytt inni samme pool
+
+**Test:**
+- Byttet alle 4 PC-er fra Static til DHCP i IP Configuration
+- PC0 og PC1 fikk automatisk IP i 192.168.10.x-området
+- PC2 og PC3 fikk automatisk IP i 192.168.20.x-området
+- Ping fra PC0 til PC2 med nye DHCP-tildelte adresser → OK, bekrefter at ruting fortsatt fungerer med dynamiske adresser
+
+**Læring:**
+- DHCP-pool knyttes til riktig VLAN basert på hvilket subnett den er definert for, og matches mot hvilket VLAN forespørselen kommer inn fra (via ruterens subinterface)
+- Det er switchporten (access vlan-konfigurasjon), ikke ruteren, som avgjør hvilket VLAN en tilkoblet enhet havner i
+- En ukonfigurert switchport havner som standard i VLAN 1, som ikke har DHCP-pool eller kontakt med VLAN 10/20 – nye porter må konfigureres eksplisitt
+
+---
+
 ## 17.07.2026 – Fase 2: VLAN og Router-on-a-Stick
 
 **Mål:** Segmentere ett fysisk nettverk i flere logiske VLAN på én switch, og få en ruter til å rute trafikk mellom VLAN-ene over én enkelt kabel (router-on-a-stick).
