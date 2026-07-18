@@ -1,3 +1,5 @@
+<!-- Endring gjort direkte på main -->
+
 # Læringslogg – Juniorkonsulent IT og Automatisering (Otech Consult AS)
 
 Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
