@@ -4,6 +4,39 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 17.07.2026 – Fase 3: Branch, merge og konfliktløsning
+
+**Mål:** Gjennomføre en fullstendig branch/merge-arbeidsflyt, inkludert å lage og løse en bevisst merge-konflikt, for å fullføre Fase 3 (Git) i tråd med opprinnelig plan.
+
+**Fremgangsmåte:**
+- Opprettet en ny branch: `git checkout -b test-branch`
+- Gjorde en endring i `laeringslogg.md` på `test-branch`, committet
+- Byttet tilbake til `main`: `git checkout main`
+- Gjorde en *annen* endring på samme linje i `laeringslogg.md` på `main`, committet
+- Kjørte `git merge test-branch` fra `main` → utløste bevisst en merge-konflikt
+
+**Løsning av konflikten:**
+- Åpnet filen i VS Code og fant konfliktmarkørene (`<<<<<<<`, `=======`, `>>>>>>>`)
+- Redigerte filen manuelt for å beholde ønsket innhold, fjernet markørene
+- Fullførte merge med `git add` + `git commit`
+- Slettet `test-branch` etter vellykket merge (`git branch -d test-branch`)
+- Pushet resultatet til GitHub
+
+**Øvrig:**
+- Oppdaterte `README.md` med oversikt over alle 7 faser og status
+- Ryddet bort testlinjene som ble brukt til å fremprovosere konflikten
+
+**Resultat:**
+- Merge-konflikt løst korrekt, verifisert med `git log` og bekreftet på GitHub etter push
+- Fase 3 (Git) er nå fullt dekket: commit/branch/merge, konfliktløsning, gode commit-meldinger, README
+
+**Læring:**
+- Konfliktmarkørene (`<<<<<<<`, `=======`, `>>>>>>>`) viser tydelig hvilken branch som eide hvilken versjon av endringen
+- Å løse en konflikt er i praksis bare å redigere filen manuelt til ønsket sluttresultat, så committe som normalt
+- Branch-basert arbeidsflyt lar deg eksperimentere trygt uten å påvirke `main` før du er klar til å slå sammen
+
+---
+
 ## 17.07.2026 – Fase 2: DNS-oppsett og test på tvers av VLAN
 
 **Mål:** Sette opp en enkel DNS-tjeneste og bekrefte navneoppslag fungerer, inkludert på tvers av VLAN.
