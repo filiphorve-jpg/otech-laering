@@ -1,4 +1,5 @@
 <!-- Endring gjort direkte på main -->
+<!-- Test-endring på test-branch -->
 
 # Læringslogg – Juniorkonsulent IT og Automatisering (Otech Consult AS)
 
