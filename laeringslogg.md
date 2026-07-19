@@ -4,6 +4,42 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 18.07.2026 – Fase 4: Python-grunnlag og filbehandling
+
+**Mål:** Sette opp Python-utviklingsmiljø via VS Code Remote-SSH mot Ubuntu-VM-en, og dekke grunnleggende Python-syntaks samt filbehandling.
+
+**Miljøoppsett:**
+- Installerte VS Code-utvidelsen "Remote - SSH"
+- Satt opp SSH-config for tilkobling til VM-en (samme port forwarding som fra Fase 1: localhost:2222)
+- Løste en midlertidig nedlastingsfeil av VS Code Server (løst med Retry - antas å ha vært en forbigående nettverksglipp)
+- Opprettet mappe ~/fase4-python på VM-en for alt Python-arbeid
+- Bekreftet Python 3.14.4 installert
+
+**Python-konsepter dekket (repetisjon + noe nytt):**
+- Variabler, datatyper (string, int) og f-strings
+- input() og typekonvertering med int()
+- if/else-betingelser og innrykk (indentation)
+- for-løkker, lister og range()
+- Modulo-operator (%) for partall/oddetall-sjekk
+
+**Filbehandling (nytt fokus for denne økten):**
+- Skrive til fil med open(..., "w") og f.write()
+- Lese fra fil med open(..., "r") og f.read()
+- Legge til i eksisterende fil med open(..., "a") (append, uten å overskrive)
+- Kombinerte input + filskriving + tidsstempel via datetime.now().strftime(...) til et enkelt loggeskript
+
+**Resultat:**
+- Fungerende script som tar imot input fra bruker og logger det med tidsstempel til logg.txt
+- Alle øvelser kjørt og verifisert direkte i VS Code sin integrerte terminal via Remote-SSH
+
+**Læring:**
+- VS Code Remote-SSH gir samme redigeringsopplevelse som lokalt, men filene ligger fysisk på VM-en – nyttig verktøy videre i Fase 5/6
+- "w" overskriver hele filen, "a" legger til – viktig å velge riktig modus for å unngå å miste data
+- with open(...) as f: er tryggere enn å åpne filer manuelt, siden filen lukkes automatisk selv ved feil
+- Konseptuelt ligner automatisert logging (dette scriptet) på det som gjøres manuelt i laeringslogg.md – naturlig bro mot senere automatisering i Ansible
+
+---
+
 ## 17.07.2026 – Fase 3: Branch, merge og konfliktløsning
 
 **Mål:** Gjennomføre en fullstendig branch/merge-arbeidsflyt, inkludert å lage og løse en bevisst merge-konflikt, for å fullføre Fase 3 (Git) i tråd med opprinnelig plan.
