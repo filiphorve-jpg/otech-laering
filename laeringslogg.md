@@ -4,6 +4,46 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 18.07.2026 – Fase 4: Funksjoner, feilhåndtering og API-kall (sluttprosjekt)
+
+**Mål:** Fullføre kjernen av Fase 4 med funksjoner, feilhåndtering (try/except) og et script som henter data fra et eksternt API – sluttmålet for hele fasen ifølge opprinnelig plan.
+
+**Funksjoner:**
+- Definerte egen funksjon logg_oppgave(tekst) som pakker inn tidsstempel + filskriving
+- Kalte samme funksjon flere ganger med ulik input, uten å gjenta kode
+
+**Feilhåndtering:**
+- Introduserte try/except for å fange feil (f.eks. ValueError ved ugyldig input) uten at scriptet krasjer
+- Logget feilinput automatisk via logg_oppgave() inni except-blokken
+- Diskuterte forskjellen på if/else (sjekke kjente betingelser på forhånd) vs. try/except (håndtere uforutsette feil som oppstår underveis, f.eks. ved filer, nettverk, brukerinput)
+
+**Miljøproblem underveis – virtuelt miljø (venv):**
+- pip install requests feilet først med "externally-managed-environment" (Ubuntu beskytter systemets Python fra direkte pip-installasjon)
+- Opprettet virtuelt miljø: python3 -m venv venv – første forsøk ga en ufullstendig venv-mappe (manglet activate, pip osv.)
+- Årsak: den generiske pakken python3-venv installerte ikke riktig binding for Python 3.14
+- Løsning: fant og installerte riktig versjonsspesifikk pakke: sudo apt install python3.14-venv, slettet den ødelagte venv-mappen og opprettet den på nytt
+- Aktiverte med source venv/bin/activate, installerte deretter requests uten problemer
+
+**API-kall (sluttprosjekt for Fase 4):**
+- Skrev script som henter sanntids værdata for Sandnes fra Open-Meteo (gratis, åpent API, ingen nøkkel påkrevd)
+- Brukte requests.get(url) til å sende forespørsel, .json() til å parse JSON-svaret
+- Hentet ut spesifikke verdier (temperatur, vindhastighet) fra den nøstede JSON-strukturen
+- La til try/except requests.exceptions.RequestException for å håndtere nettverksfeil
+- Logget resultatet av hver kjøring til logg.txt via logg_oppgave()
+
+**Resultat:**
+- Fungerende script som henter, viser og logger ekte værdata fra internett
+- Alle kjernekonsepter i Fase 4 nå dekket: variabler, kontrollflyt, løkker, filbehandling, funksjoner, feilhåndtering, API-kall
+- Lærte i tillegg om virtuelle miljøer (venv) – ikke opprinnelig planlagt, men en viktig og vanlig del av ekte Python-arbeidsflyt
+
+**Læring:**
+- Virtuelle miljøer isolerer prosjekt-spesifikke pakker fra resten av systemet – dette er standard praksis, ikke bare en snarvei for å unngå en feilmelding
+- venv må aktiveres på nytt (source venv/bin/activate) i hver ny terminal-økt – den følger ikke automatisk med
+- try/except er nødvendig når man jobber med noe utenfor egen kontroll (nettverk, filer, brukerinput) – utfyller if/else, erstatter det ikke
+- API-er returnerer strukturert JSON-data som må "navigeres" med riktige nøkler basert på API-ets dokumentasjon
+
+---
+
 ## 18.07.2026 – Fase 4: Python-grunnlag og filbehandling
 
 **Mål:** Sette opp Python-utviklingsmiljø via VS Code Remote-SSH mot Ubuntu-VM-en, og dekke grunnleggende Python-syntaks samt filbehandling.
