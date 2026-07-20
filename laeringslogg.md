@@ -4,6 +4,45 @@ Format per uke: dato, hva som ble gjort, utfordringer, neste steg.
 
 ---
 
+## 20.07.2026 – Fase 5: Ansible – første playbook og nginx-installasjon
+
+**Mål:** Sette opp Ansible, forstå grunnbegrepene (inventory, playbook, tasks), og bruke det til å automatisere installasjon og oppstart av en tjeneste.
+
+**Miljøoppsett:**
+- Opprettet mappe ~/fase5-ansible på VM-en
+- Satt opp virtuelt miljø (venv) og installert Ansible via pip (samme fremgangsmåte som Python-venv fra Fase 4)
+- Bekreftet installasjon: Ansible core 2.21.2
+
+**Grunnbegreper testet:**
+- Laget inventory.ini med gruppen [lokale] og localhost som eneste host (ansible_connection=local)
+- Testet tilkobling med ansible -m ping → SUCCESS
+- Kjørte første ad-hoc-kommando (whoami) direkte fra kommandolinjen
+
+**Første playbook:**
+- Skrev forste-playbook.yml med enkel task (whoami) + debug-utskrift av resultatet, brukte register for å lagre og gjenbruke output
+- Kjørte med ansible-playbook -i inventory.ini forste-playbook.yml → alle tasks OK
+
+**Automatisert nginx-installasjon:**
+- Utvidet playbooken til å installere og starte nginx med apt- og service-modulene
+- become: yes brukt for å kjøre tasks med root-rettigheter
+
+**Feilsøking underveis – become/sudo-passord:**
+- --ask-become-pass feilet gjentatte ganger med "Timed out waiting for become success" – trolig VS Code sin integrerte terminal som håndterer det interaktive passord-promptet dårlig
+- Løsning: satt opp passordløs sudo for brukeren filip via /etc/sudoers.d/filip (NOPASSWD:ALL) – bevisst valg, kun trygt fordi dette er en isolert lab-VM, ikke noe som gjøres på produksjonssystemer
+- Etter dette kjørte playbooken uten problemer
+
+**Resultat:**
+- nginx installert og verifisert kjørende (systemctl status nginx → active running)
+- Bekreftet fungerende webserver med curl http://localhost → fikk nginx sin standard velkomstside
+
+**Læring:**
+- Ansible sin styrke er gjentakbarhet – playbooken kan kjøres om igjen uten å "ødelegge" noe (apt-modulen installerer bare hvis pakken ikke allerede finnes)
+- become: yes er Ansibles versjon av sudo, men krever enten interaktivt passord (kan være upraktisk i enkelte terminaler) eller passordløs sudo-konfigurasjon for automatisering
+- register + debug er nyttig for å se og bruke resultatet av en task videre i playbooken
+- Neste steg: roller og templates for mer strukturerte, gjenbrukbare playbooks
+
+---
+
 ## 18.07.2026 – Fase 4: Funksjoner, feilhåndtering og API-kall (sluttprosjekt)
 
 **Mål:** Fullføre kjernen av Fase 4 med funksjoner, feilhåndtering (try/except) og et script som henter data fra et eksternt API – sluttmålet for hele fasen ifølge opprinnelig plan.
